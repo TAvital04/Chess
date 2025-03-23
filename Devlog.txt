@@ -1,0 +1,103 @@
+Day 1
+    -I got the fill in the square function to work on the first try like a boss
+    -when i comment out [createThePiecesPawn(graphic, Color.LIGHT_GRAY);](line 124 atm),
+     the chessboard disappears
+
+Day 2 
+    -today i drew all the pieces and printed them on the screen
+    -next wrote all drawing methods in the respected chess piece class
+    -next i need to cover the first step of selecting a square
+
+Day 3
+    -tonight i'm going to devise a system for the mouse click and paint component systems to interact in
+        -i'm going to start by learning about interfaces because i feel like they might be relevent
+            -an interface is doing too much
+        -instead i'm going to focus on a specific aspect of this system, which is my need to click on
+            a square and for it to be selected with a gold frame on it
+    -i had to backtrack and realise i need to do something about default values in the chesspiece 2d array
+
+Day 4
+    -tonight i'm going to start with creating a default value for the 2d array
+    -ok i'm back at the point where i am trying to get a square to be clicked on to get a frame on it for the select phase
+
+Day 5
+    -i am trying to see if i can make it so that when i click on a box, it gets a gold square printed around it
+    -when i click, i can see that i select the correct cells, although the values may be reversed, but that doesn't matter
+        to me right now. i just like that it works
+    -i want to make it so that the cell where the mouse has clicked triggers a method called select() which will add the gold frame
+
+Day 6
+    -last i checked my row and col variables are switched :P, so i have to fix that
+    -next, i need to show the selection box. right now, each cell has its own draw function and that determines
+        whether or not a selection box is placed, but i don't understand how the draw function works in this
+        case so i need to investigate that
+    -i completely understand the draw function and i've made tremendous progress on streamlining my code with it in mind,
+        but in this, i messed with how the images are drawn so they are all being drawn on (0, 0)
+
+Day 7
+    -unfortunately, i didn't open the document to suddenly have pieces that go where they need to go; instead, the problem that
+        was here before i left is still here
+    -the good news is there is nothing i love more than solving problems
+    -i will start by hard-coding positions to find when something goes somewhere besides (0,0) and we'll go from there
+    -they were going 1 pixel away instead of 1 * cellSize pixels away
+
+    -did a lot in the context of encapsulation
+        -created my first enum while learning all about it for chesspiece colors
+        -rook<*chesspiece*<cell added a chesspiece class
+            -makes the draw method go through three levels of action but in a good way
+        -leaving myself off with creating a chessboard class so that i don't have to make all that happen in chessgame
+
+Day 8
+    -today i want to make a chessboard class and have that handle all that everything
+    -my encapsulation process is so refined here that this took 1 try despite being ambitious
+        -i thought this would take all day
+
+    -next, when i click on a piece, i want the screen to display where the piece can go. this will also help me with debugging,
+        because i will know where the valid clicks are
+        -i'm going to start with a pawn, because if i can make a pawn move, it will make way for me to try rest bishop without
+        needing to make special test cases
+        
+    -i actually need to start by creating a turn system
+        -1: press any piece
+            -the board determines if it's the color of the right player and then displays all the valid moves
+            -if there are no valid moves, 1: is started again
+        -2: a piece was selected, it's the right color, and it has one or move valid moves
+            -the next click is only considered if that click is valid
+            -moves the piece to that location
+        -resets to one and changes the color
+    -!done
+
+Day 9
+    -worked on the turn system
+    -left trying to give a pawn a returnValidMovesForAPiece() implementation
+    -many issues.
+
+Day 10
+    -did everything to remove the ChessPiece class
+
+Day 12
+    -chooseLocation() doesn't seem to be responding and i'm not sure why
+
+Day 13
+    -i cannot see the visual consequences of chooseLocation() even though it seems to be working back-end
+        -i will use my powers to be sure that it does
+        -my printlns indicate that the assignment logic works as expected back end
+
+        -i needed to update the chess pieces in the chessboard but that doesn't change the location of the images,
+        so i have to change those too. i might want to streamline that
+
+Day 14
+    -move almost works but it doesn't
+    -progress up the wazoo
+        -all interaction is possible
+        -eating is possible (by accident)
+        -board gets flipped
+    -bishops are in too!
+    -leaving with no bugs
+
+Day 15
+    -all pieces move, now to the annoying stuff
+        -en passant
+        -checkmate
+
+    -this may not help, but i'm going to work on a Coordinate class
