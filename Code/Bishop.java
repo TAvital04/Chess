@@ -43,7 +43,7 @@ public class Bishop extends Cell
         }
 
         @Override
-        public ArrayList<Move> calculateValidMoves(ChessBoard board)
+        public ArrayList<Move> calculateValidMoves(ChessBoard board, Move.Type moveType)
         {
             ArrayList<Move> moves = new ArrayList<Move>();
 

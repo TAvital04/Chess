@@ -44,7 +44,7 @@ public class King extends Cell
         }
 
         @Override
-        public ArrayList<Move> calculateValidMoves(ChessBoard board)
+        public ArrayList<Move> calculateValidMoves(ChessBoard board, Move.Type moveType)
         {
             ArrayList<Move> moves = new ArrayList<Move>();
 
@@ -100,18 +100,22 @@ public class King extends Cell
                 moves.add(new Move(col - 1, row - 1, Move.Type.NORMAL));
             }
 
-            // //Castle
-            // if(this.getAge() == 0)
-            // {
-            //     castling(board, moves);
-            // }
+            System.out.println(age + " " + moveType);
+            //Castle
+            if(this.getAge() == 0 && moveType != Move.Type.CASTLE)
+            //I'm about to check if a king that might prevent me from castling can castle, which it can't
+                //This would case a very annoying infinite loop and is basically the whole reason the Move class exists
+            {
+                //Trying to castle
+                castling(board, moves);
+            }
 
             return moves;
         }
 
         public boolean isAtSpawn()
         {
-            if((super.getRow() == 0 || super.getRow() == 7) && super.getCol() == 4)
+            if(((super.getRow() == 0 && super.getCol() == 3) || (super.getRow() == 7 && super.getCol() == 4)))
             {
                 return true;
             }
@@ -120,12 +124,13 @@ public class King extends Cell
         }
 
     //Castling methods
-        public void castling(ChessBoard board, ArrayList<Coordinates> moves)
+        public void castling(ChessBoard board, ArrayList<Move> moves)
         /*
          * The king can castle if
          *      -the king has not moved
          *      -the rook has not moved
          *      -no enemy pieces are looking at the rook, king, nor the path between them
+         *      -nothing stands between the rook and the king
          */
         {
             //Left
@@ -137,7 +142,7 @@ public class King extends Cell
 
             if(kingIsValid && rookIsValid && pathIsSafe)
             {
-                moves.add(new Coordinates(0, 7));
+                moves.add(new Move(0, 7, Move.Type.CASTLE));
             }
 
             //Right
@@ -146,9 +151,10 @@ public class King extends Cell
             rookIsValid = rook.getType() == Type.ROOK && rook.getAge() == 0;
             pathIsSafe = getPathIsSafe(board, 4, 7);
 
+
             if(kingIsValid && rookIsValid && pathIsSafe)
             {
-                moves.add(new Coordinates(7, 7));
+                moves.add(new Move(7, 7, Move.Type.CASTLE));
             }
         }
 
@@ -156,7 +162,10 @@ public class King extends Cell
         {
             for(int i = start; i <= end; i++)
             {
-                
+                if(!board.cellIsSafe(new Move(i, 0, Move.Type.CASTLE), super.getColor()))
+                {
+                    return false;
+                }
             }
 
             return true;

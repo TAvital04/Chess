@@ -15,6 +15,7 @@ public class ChessGame extends JPanel implements MouseListener
         private int turn;
 
         private Cell activePiece;
+        private ArrayList<Move> activePieceMoves = new ArrayList<Move>();
 
     //Constructor
         public ChessGame(int boardSize)
@@ -80,22 +81,22 @@ public class ChessGame extends JPanel implements MouseListener
             {
                 case 0:
                 //It is light's turn to choose a piece
-                    choosePiece(selection, Cell.Color.LIGHT);
+                    activePieceMoves = choosePiece(selection, Cell.Color.LIGHT);
                     break;
                 case 1:
                 //It is light's turn to choose a location
-                    chooseLocation(selection);
+                    chooseLocation(selection, activePieceMoves);
                     break;
 
                 case 2:
                 //It is dark's turn to choose a piece
 
-                    choosePiece(selection, Cell.Color.DARK);
+                    activePieceMoves = choosePiece(selection, Cell.Color.DARK);
                     break;
                 
                 case 3:
                 //It is dark's turn to choose a location
-                    chooseLocation(selection);
+                    chooseLocation(selection, activePieceMoves);
                     break;
             }
 
@@ -108,25 +109,28 @@ public class ChessGame extends JPanel implements MouseListener
         @Override public void mouseEntered(MouseEvent e) {}
         @Override public void mouseExited(MouseEvent e) {}
 
-        public void choosePiece(Cell selection, Cell.Color color)
+        public ArrayList<Move> choosePiece(Cell selection, Cell.Color color)
         //Performs selection operation. If successful, increments turn by one, thereby navigating the switch case
             //Chose possible moves for the next step (choosing a location)
         {
-            if(selection.getColor() == color && selection.calculateValidMoves(chessBoard).size() > 0)
+            ArrayList<Move> activePieceMoves = selection.calculateValidMoves(chessBoard, Move.Type.NORMAL);
+            if(selection.getColor() == color && activePieceMoves.size() > 0)
             {
-                //The selection has been verified, so select it
+                //The selection has been verified, so make it the activePiece
                 selection.select();
                 activePiece = selection;
 
                 //Show the locations that the player can move to
-                chessBoard.showValidMoves(activePiece.calculateValidMoves(chessBoard));
+                chessBoard.showValidMoves(activePieceMoves);
 
                 //Increment the turn variable
                 turn++;
             }
+
+            return activePieceMoves;
         }
 
-        public void chooseLocation(Cell selection)
+        public void chooseLocation(Cell selection, ArrayList<Move> activePieceMoves)
         //Possible choices are selected. The player must choose which cell to go to
         {            
             //First if the player clicked on the piece they just clicked on, deselect the whole board and let the player try again
@@ -138,9 +142,7 @@ public class ChessGame extends JPanel implements MouseListener
             }
 
             //Calculate the valid moves and check if the given cell is in one of them
-            ArrayList<Move> moves = activePiece.calculateValidMoves(chessBoard);
-
-            for(Move move: moves)
+            for(Move move: activePieceMoves)
             {
                 if(move.getPos().equals(selection.getPos()))
                 {

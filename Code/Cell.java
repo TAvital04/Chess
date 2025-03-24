@@ -112,7 +112,7 @@ public class Cell
             this.validSelect = false;
         }
 
-        public ArrayList<Move> calculateValidMoves(ChessBoard board)
+        public ArrayList<Move> calculateValidMoves(ChessBoard board, Move.Type moveType)
         {
             return new ArrayList<Move>();
         }

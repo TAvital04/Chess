@@ -273,6 +273,42 @@ public class ChessBoard
             }
         }
 
+        public boolean cellIsSafe(Move move, Cell.Color color)
+        {
+            for(Cell[] row: chessBoard)
+            {
+                for(Cell cell: row)
+                //For all the cells on the board
+                {
+                    if(Cell.Color.isOpposite(cell.getColor(), color))
+                    //If the cell is the opposite color of the move
+                    {
+                        if(inEnemySight(move, cell))
+                        //If the cell can see the move, the move is not safe
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+        public boolean inEnemySight(Move move, Cell attacker)
+        {
+            for(Move attack: attacker.calculateValidMoves(this, move.getType()))
+            //For all the possible attacks
+            {
+                if(attack.getPos().equals(move.getPos()))
+                //If the attack is at the same position of the move, the move is not safe
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
     //Other methods
         public void age()
         //Some pieces have actions that only work when they are of some age 
