@@ -19,7 +19,6 @@ public class Cell
         private boolean selected = false;
         private boolean validSelect = false;
 
-        @SuppressWarnings("unused")
         private int age;
         
     //Constructor
