@@ -43,9 +43,9 @@ public class Queen extends Cell
         }
 
         @Override
-        public ArrayList<Coordinates> calculateValidMoves(ChessBoard board)
+        public ArrayList<Move> calculateValidMoves(ChessBoard board)
         {
-            ArrayList<Coordinates> moves = new ArrayList<Coordinates>();
+            ArrayList<Move> moves = new ArrayList<Move>();
 
             int col, row;
 
@@ -55,96 +55,96 @@ public class Queen extends Cell
             col = super.getCol(); row = super.getRow() - 1;
             while(canMoveThere(board, col, row))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
                 row--;
             }
             if(canEatThere(board, col, row, color))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
             }
 
             //Up and to the right
             col = super.getCol() + 1; row = super.getRow() - 1;
             while(canMoveThere(board, col, row))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
                 col++; row--;
             }
             if(canEatThere(board, col, row, color))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
             }
 
             //Right
             col = super.getCol() + 1; row = super.getRow();
             while(canMoveThere(board, col, row))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
                 col++;
             }
             if(canEatThere(board, col, row, color))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
             }
 
             //Down and to the right
             col = super.getCol() + 1; row = super.getRow() + 1;
             while(canMoveThere(board, col, row))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
                 col++; row++;
             }
             if(canEatThere(board, col, row, color))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
             }
 
             //Down
             col = super.getCol(); row = super.getRow() + 1;
             while(canMoveThere(board, col, row))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
                 row++;
             }
             if(canEatThere(board, col, row, color))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
             }
 
             //Down and to the left
             col = super.getCol() - 1; row = super.getRow() + 1;
             while(canMoveThere(board, col, row))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
                 col--; row++;
             }
             if(canEatThere(board, col, row, color))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
             }
 
             //Left
             col = super.getCol() - 1; row = super.getRow();
             while(canMoveThere(board, col, row))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
                 col--;
             }
             if(canEatThere(board, col, row, color))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
             }
 
             //Up and to the left
             col = super.getCol() - 1; row = super.getRow() - 1;
             while(canMoveThere(board, col, row))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
                 col--; row--;
             }
             if(canEatThere(board, col, row, color))
             {
-                moves.add(new Coordinates(col, row));
+                moves.add(new Move(col, row, Move.Type.NORMAL));
             }
 
             return moves;

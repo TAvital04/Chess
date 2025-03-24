@@ -45,9 +45,9 @@ public class Pawn extends Cell
         }
 
         @Override
-        public ArrayList<Coordinates> calculateValidMoves(ChessBoard board)
+        public ArrayList<Move> calculateValidMoves(ChessBoard board)
         {
-            ArrayList<Coordinates> moves = new ArrayList<Coordinates>();
+            ArrayList<Move> moves = new ArrayList<Move>();
 
             int col = super.getCol(), row = super.getRow();
 
@@ -56,19 +56,19 @@ public class Pawn extends Cell
             //If a push forward is in bounds, add it
             if(canMoveThere(board, col, row - 1))
             {
-                moves.add(new Coordinates(col, row - 1));
+                moves.add(new Move(col, row - 1, Move.Type.NORMAL));
             }
 
             //If a diagonal move is in bounds and takes a piece of the opposite color, add it
                 //Up and to the left
                 if(canEatThere(board, col - 1, row - 1, color))
                 {
-                    moves.add(new Coordinates(col - 1, row - 1));
+                    moves.add(new Move(col - 1, row - 1, Move.Type.NORMAL));
                 }
                 //Up and to the right
                 if(canEatThere(board, col + 1, row - 1, color))
                 {
-                    moves.add(new Coordinates(col + 1, row - 1));
+                    moves.add(new Move(col + 1, row - 1, Move.Type.NORMAL));
                 }
 
             //If age = 0, the piece can move forward by 2
@@ -77,7 +77,7 @@ public class Pawn extends Cell
                 {
                     if(canMoveThere(board, col, row - 2))
                     {
-                        moves.add(new Coordinates(col, row - 2));
+                        moves.add(new Move(col, row - 2, Move.Type.NORMAL));
                     }
                 }
 
@@ -88,7 +88,7 @@ public class Pawn extends Cell
                     Cell cell = board.getPiece(col - 1, row);
                     if(cell.getType() == Type.PAWN && cell.getAge() == 1)
                     {
-                        moves.add(new Coordinates(col - 1, row - 1));
+                        moves.add(new Move(col - 1, row - 1, Move.Type.ENPASSANT));
                     }
                 }
                 //Right
@@ -99,7 +99,7 @@ public class Pawn extends Cell
                         Pawn pawn = (Pawn)board.getPiece(col + 1, row);
                         if(pawn.getAge() == 1)
                         {
-                            moves.add(new Coordinates(col + 1, row - 1));
+                            moves.add(new Move(col + 1, row - 1, Move.Type.ENPASSANT));
                         }
                     }
                 }

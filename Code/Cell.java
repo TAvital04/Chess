@@ -112,9 +112,9 @@ public class Cell
             this.validSelect = false;
         }
 
-        public ArrayList<Coordinates> calculateValidMoves(ChessBoard board)
+        public ArrayList<Move> calculateValidMoves(ChessBoard board)
         {
-            return new ArrayList<Coordinates>();
+            return new ArrayList<Move>();
         }
 
     //Other methods

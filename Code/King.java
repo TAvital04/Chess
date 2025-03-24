@@ -44,9 +44,9 @@ public class King extends Cell
         }
 
         @Override
-        public ArrayList<Coordinates> calculateValidMoves(ChessBoard board)
+        public ArrayList<Move> calculateValidMoves(ChessBoard board)
         {
-            ArrayList<Coordinates> moves = new ArrayList<Coordinates>();
+            ArrayList<Move> moves = new ArrayList<Move>();
 
             int col = super.getCol(), row = super.getRow();
 
@@ -55,49 +55,49 @@ public class King extends Cell
             //Up
             if(canMoveAndEatThere(board, col, row - 1, color))
             {
-                moves.add(new Coordinates(col, row - 1));
+                moves.add(new Move(col, row - 1, Move.Type.NORMAL));
             }
 
             //Up and to the right
             if(canMoveAndEatThere(board, col + 1, row - 1, color))
             {
-                moves.add(new Coordinates(col + 1, row - 1));
+                moves.add(new Move(col + 1, row - 1, Move.Type.NORMAL));
             }
 
             //To the right
             if(canMoveAndEatThere(board, col + 1, row, color))
             {
-                moves.add(new Coordinates(col + 1, row));
+                moves.add(new Move(col + 1, row, Move.Type.NORMAL));
             }
 
             //Down and to the right
             if(canMoveAndEatThere(board, col + 1, row + 1, color))
             {
-                moves.add(new Coordinates(col + 1, row + 1));
+                moves.add(new Move(col + 1, row + 1, Move.Type.NORMAL));
             }
 
             //Down
             if(canMoveAndEatThere(board, col, row + 1, color))
             {
-                moves.add(new Coordinates(col, row + 1));
+                moves.add(new Move(col, row + 1, Move.Type.NORMAL));
             }
 
             //Down and to the left
             if(canMoveAndEatThere(board, col - 1, row + 1, color))
             {
-                moves.add(new Coordinates(col - 1, row + 1));
+                moves.add(new Move(col - 1, row + 1, Move.Type.NORMAL));
             }
 
             //To the left
             if(canMoveAndEatThere(board, col - 1, row, color))
             {
-                moves.add(new Coordinates(col - 1, row));
+                moves.add(new Move(col - 1, row, Move.Type.NORMAL));
             }
 
             //Up and to the left
             if(canMoveAndEatThere(board, col - 1, row - 1, color))
             {
-                moves.add(new Coordinates(col - 1, row - 1));
+                moves.add(new Move(col - 1, row - 1, Move.Type.NORMAL));
             }
 
             // //Castle

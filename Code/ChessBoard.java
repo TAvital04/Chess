@@ -212,7 +212,7 @@ public class ChessBoard
             }
         }
 
-        public void showValidMoves(ArrayList<Coordinates> moves)
+        public void showValidMoves(ArrayList<Move> moves)
         {
             for(Coordinates pos: moves)
             {

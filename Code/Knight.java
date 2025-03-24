@@ -43,9 +43,9 @@ public class Knight extends Cell
         }
 
         @Override
-        public ArrayList<Coordinates> calculateValidMoves(ChessBoard board)
+        public ArrayList<Move> calculateValidMoves(ChessBoard board)
         {
-            ArrayList<Coordinates> moves = new ArrayList<Coordinates>();
+            ArrayList<Move> moves = new ArrayList<Move>();
 
             int col = super.getCol(), row = super.getRow();
             Color color = super.getColor();
@@ -53,49 +53,49 @@ public class Knight extends Cell
             //Up 2 right 1
             if(canMoveAndEatThere(board, col + 1, row - 2, color))
             {
-                moves.add(new Coordinates(col + 1, row - 2));
+                moves.add(new Move(col + 1, row - 2, Move.Type.NORMAL));
             }
 
             //Up 1 right 2
             if(canMoveAndEatThere(board, col + 2, row - 1, color))
             {
-                moves.add(new Coordinates(col + 2, row - 1));
+                moves.add(new Move(col + 2, row - 1, Move.Type.NORMAL));
             }
             
             //Down 1 right 2
             if(canMoveAndEatThere(board, col + 2, row + 1, color))
             {
-                moves.add(new Coordinates(col + 2, row + 1));
+                moves.add(new Move(col + 2, row + 1, Move.Type.NORMAL));
             }
 
             //Down 2 right 1
             if(canMoveAndEatThere(board, col + 1, row + 2, color))
             {
-                moves.add(new Coordinates(col + 1, row + 2));
+                moves.add(new Move(col + 1, row + 2, Move.Type.NORMAL));
             }
 
             //Down 2 left 1
             if(canMoveAndEatThere(board, col - 1, row + 2, color))
             {
-                moves.add(new Coordinates(col - 1, row + 2));
+                moves.add(new Move(col - 1, row + 2, Move.Type.NORMAL));
             }
 
             //Down 1 left 2
             if(canMoveAndEatThere(board, col - 2, row + 1, color))
             {
-                moves.add(new Coordinates(col - 2, row + 1));
+                moves.add(new Move(col - 2, row + 1, Move.Type.NORMAL));
             }
 
             //Up 1 left 2
             if(canMoveAndEatThere(board, col - 2, row - 1, color))
             {
-                moves.add(new Coordinates(col - 2, row - 1));
+                moves.add(new Move(col - 2, row - 1, Move.Type.NORMAL));
             }
 
             //Up 2 left 1
             if(canMoveAndEatThere(board, col - 1, row - 2, color))
             {
-                moves.add(new Coordinates(col - 1, row - 2));
+                moves.add(new Move(col - 1, row - 2, Move.Type.NORMAL));
             }
 
             return moves;

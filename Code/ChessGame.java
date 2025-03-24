@@ -138,17 +138,17 @@ public class ChessGame extends JPanel implements MouseListener
             }
 
             //Calculate the valid moves and check if the given cell is in one of them
-            ArrayList<Coordinates> moves = activePiece.calculateValidMoves(chessBoard);
+            ArrayList<Move> moves = activePiece.calculateValidMoves(chessBoard);
 
-            for(Coordinates pos: moves)
+            for(Move move: moves)
             {
-                if(pos.equals(selection.getPos()))
+                if(move.equals(selection.getPos()))
                 {
                     //First deselect everything
                     chessBoard.deselect();
                     
                     //Next make a move
-                    chessBoard.move(activePiece, pos);
+                    chessBoard.move(activePiece, move);
 
                     //Increment the turn variable
                     turn++;
