@@ -142,7 +142,7 @@ public class ChessGame extends JPanel implements MouseListener
 
             for(Move move: moves)
             {
-                if(move.equals(selection.getPos()))
+                if(move.getPos().equals(selection.getPos()))
                 {
                     //First deselect everything
                     chessBoard.deselect();

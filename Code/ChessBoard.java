@@ -214,9 +214,9 @@ public class ChessBoard
 
         public void showValidMoves(ArrayList<Move> moves)
         {
-            for(Coordinates pos: moves)
+            for(Move move: moves)
             {
-                getPiece(pos).validSelect();
+                getPiece(move.getPos()).validSelect();
             }
         }
 
@@ -256,13 +256,21 @@ public class ChessBoard
             return false;
         }
 
-        public void move(Cell activePiece, Coordinates destination)
+        public void move(Cell activePiece, Move move)
         //Handles moving a piece after it has been verified. This is called in ChessGame under chooseLocation
         {
             Coordinates activePiecePos = activePiece.getPos();
 
-            setPiece(activePiece, destination);
-            setPiece(new Cell(activePiecePos, this), activePiecePos);
+            if(move.getType() == Move.Type.NORMAL || move.getType() == Move.Type.ENPASSANT)
+            {
+                setPiece(activePiece, move.getPos());
+                setPiece(new Cell(activePiecePos, this), activePiecePos);
+            }
+
+            if(move.getType() == Move.Type.ENPASSANT)
+            {
+                setPiece(new Cell(move.getPos().getX(), move.getPos().getY() + 1, this), move.getPos().getX(), move.getPos().getY() + 1);
+            }
         }
 
     //Other methods
