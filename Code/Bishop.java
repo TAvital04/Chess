@@ -12,12 +12,12 @@ public class Bishop extends Cell
         private static final File DARK_IMAGE_FILE = new File("Assets\\Dark_Bishop.png");
 
     //Constructor
-        public Bishop(Coordinates pos, ChessPieceColor color, ChessBoard board)
+        public Bishop(Coordinates pos, Cell.Color color, ChessBoard board)
         {
             super(pos, board);
 
             super.setColor(color);
-            super.setType(ChessPieceType.BISHOP);
+            super.setType(Type.BISHOP);
         }
 
     //Methods
@@ -26,11 +26,11 @@ public class Bishop extends Cell
         {
             try
             {
-                if(super.getColor() == ChessPieceColor.LIGHT)
+                if(super.getColor() == Color.LIGHT)
                 {
                     graphic.drawImage(ImageIO.read(LIGHT_IMAGE_FILE), super.getCol() * Cell.getCellSize(), super.getRow() * Cell.getCellSize(), null);
                 }
-                else if(super.getColor() == ChessPieceColor.DARK)
+                else if(super.getColor() == Cell.Color.DARK)
                 {
                     graphic.drawImage(ImageIO.read(DARK_IMAGE_FILE), super.getCol() * Cell.getCellSize(), super.getRow() * Cell.getCellSize(), null);
                 }
@@ -48,7 +48,7 @@ public class Bishop extends Cell
             ArrayList<Coordinates> moves = new ArrayList<Coordinates>();
 
             int col, row;
-            ChessPieceColor color = super.getColor();
+            Cell.Color color = super.getColor();
 
             //Up and to the right
             col = super.getCol() + 1; row = super.getRow() - 1;

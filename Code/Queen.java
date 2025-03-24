@@ -12,12 +12,12 @@ public class Queen extends Cell
         private static final File DARK_IMAGE_FILE = new File("Assets\\Dark_Queen.png");
 
     //Constructor
-        public Queen(Coordinates pos, ChessPieceColor color, ChessBoard board)
+        public Queen(Coordinates pos, Color color, ChessBoard board)
         {
             super(pos, board);
 
             super.setColor(color);
-            super.setType(ChessPieceType.QUEEN);
+            super.setType(Type.QUEEN);
         }
 
     //Methods
@@ -26,11 +26,11 @@ public class Queen extends Cell
         {
             try
             {
-                if(super.getColor() == ChessPieceColor.LIGHT)
+                if(super.getColor() == Color.LIGHT)
                 {
                     graphic.drawImage(ImageIO.read(LIGHT_IMAGE_FILE), super.getCol() * Cell.getCellSize(), super.getRow() * Cell.getCellSize(), null);
                 }
-                else if(super.getColor() == ChessPieceColor.DARK)
+                else if(super.getColor() == Color.DARK)
                 {
                     graphic.drawImage(ImageIO.read(DARK_IMAGE_FILE), super.getCol() * Cell.getCellSize(), super.getRow() * Cell.getCellSize(), null);
                 }
@@ -49,7 +49,7 @@ public class Queen extends Cell
 
             int col, row;
 
-            ChessPieceColor color = super.getColor();
+            Color color = super.getColor();
 
             //Up
             col = super.getCol(); row = super.getRow() - 1;

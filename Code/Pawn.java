@@ -12,12 +12,12 @@ public class Pawn extends Cell
         private static final File DARK_IMAGE_FILE = new File("Assets\\Dark_Pawn.png");
 
     //Constructor
-        public Pawn(Coordinates pos, ChessPieceColor color, ChessBoard board)
+        public Pawn(Coordinates pos, Color color, ChessBoard board)
         {
             super(pos, board);
             
             super.setColor(color);
-            super.setType(ChessPieceType.PAWN);
+            super.setType(Type.PAWN);
 
             super.setAge(0);
         }
@@ -28,11 +28,11 @@ public class Pawn extends Cell
         {
             try
             {
-                if(super.getColor() == ChessPieceColor.LIGHT)
+                if(super.getColor() == Color.LIGHT)
                 {
                     graphic.drawImage(ImageIO.read(LIGHT_IMAGE_FILE), super.getCol() * Cell.getCellSize(), super.getRow() * Cell.getCellSize(), null);
                 }
-                else if(super.getColor() == ChessPieceColor.DARK)
+                else if(super.getColor() == Color.DARK)
                 {
                     graphic.drawImage(ImageIO.read(DARK_IMAGE_FILE), super.getCol() * Cell.getCellSize(), super.getRow() * Cell.getCellSize(), null);
                 }
@@ -51,7 +51,7 @@ public class Pawn extends Cell
 
             int col = super.getCol(), row = super.getRow();
 
-            ChessPieceColor color = super.getColor();
+            Color color = super.getColor();
 
             //If a push forward is in bounds, add it
             if(canMoveThere(board, col, row - 1))
@@ -75,7 +75,7 @@ public class Pawn extends Cell
                 //I don't have to check bounds
                 if(super.getAge() == 0)
                 {
-                    if(canMoveThere(board, col, row))
+                    if(canMoveThere(board, col, row - 2))
                     {
                         moves.add(new Coordinates(col, row - 2));
                     }
@@ -86,7 +86,7 @@ public class Pawn extends Cell
                 if(canMoveAndEatThere(board, col - 1, row - 1, color))
                 {
                     Cell cell = board.getPiece(col - 1, row);
-                    if(cell.getType() == ChessPieceType.PAWN && cell.getAge() == 1)
+                    if(cell.getType() == Type.PAWN && cell.getAge() == 1)
                     {
                         moves.add(new Coordinates(col - 1, row - 1));
                     }

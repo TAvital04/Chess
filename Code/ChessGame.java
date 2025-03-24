@@ -28,6 +28,11 @@ public class ChessGame extends JPanel implements MouseListener
             addMouseListener(this);
         }
 
+    //Enums
+        public enum GameState {
+            SAFE, STALEMATE, CHECKMATE;
+        }
+    
     //Drawing methods
         @Override
         /*
@@ -75,7 +80,7 @@ public class ChessGame extends JPanel implements MouseListener
             {
                 case 0:
                 //It is light's turn to choose a piece
-                    choosePiece(selection, ChessPieceColor.LIGHT);
+                    choosePiece(selection, Cell.Color.LIGHT);
                     break;
                 case 1:
                 //It is light's turn to choose a location
@@ -85,7 +90,7 @@ public class ChessGame extends JPanel implements MouseListener
                 case 2:
                 //It is dark's turn to choose a piece
 
-                    choosePiece(selection, ChessPieceColor.DARK);
+                    choosePiece(selection, Cell.Color.DARK);
                     break;
                 
                 case 3:
@@ -103,7 +108,7 @@ public class ChessGame extends JPanel implements MouseListener
         @Override public void mouseEntered(MouseEvent e) {}
         @Override public void mouseExited(MouseEvent e) {}
 
-        public void choosePiece(Cell selection, ChessPieceColor color)
+        public void choosePiece(Cell selection, Cell.Color color)
         //Performs selection operation. If successful, increments turn by one, thereby navigating the switch case
             //Chose possible moves for the next step (choosing a location)
         {

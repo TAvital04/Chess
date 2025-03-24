@@ -126,13 +126,13 @@ public class ChessBoard
         *
         */
         {
-            instantiateThePawns(graphic, ChessPieceColor.LIGHT);
-            instantiateTheHeavies(graphic, ChessPieceColor.LIGHT);
+            instantiateThePawns(graphic, Cell.Color.LIGHT);
+            instantiateTheHeavies(graphic, Cell.Color.LIGHT);
 
-            instantiateThePawns(graphic, ChessPieceColor.DARK);
-            instantiateTheHeavies(graphic, ChessPieceColor.DARK);
+            instantiateThePawns(graphic, Cell.Color.DARK);
+            instantiateTheHeavies(graphic, Cell.Color.DARK);
         }
-        public void instantiateThePawns(Graphics graphic, ChessPieceColor color)
+        public void instantiateThePawns(Graphics graphic, Cell.Color color)
         {
             //Determine what row to fill the pawns with
             int row = getPawnRow(color) - 1; //-1 because arrays start at 0 but the board starts at 1
@@ -145,9 +145,9 @@ public class ChessBoard
                 chessBoard[row][col].draw(graphic);
             }
         }
-        public int getPawnRow(ChessPieceColor color)
+        public int getPawnRow(Cell.Color color)
         {
-            if(color == ChessPieceColor.LIGHT)
+            if(color == Cell.Color.LIGHT)
             //[First player, light, white] pawns are on row two
             {
                 return 7;
@@ -158,7 +158,7 @@ public class ChessBoard
                 return 2;
             }
         }
-        public void instantiateTheHeavies(Graphics graphic, ChessPieceColor color)
+        public void instantiateTheHeavies(Graphics graphic, Cell.Color color)
         {
             int row = getHeavyRow(color) - 1; //-1 because arrays start at 0 but the board starts at 1
 
@@ -186,9 +186,9 @@ public class ChessBoard
             chessBoard[row][7] = new Rook(new Coordinates(7, row), color, this);
             chessBoard[row][7].draw(graphic);
         }
-        public int getHeavyRow(ChessPieceColor color)
+        public int getHeavyRow(Cell.Color color)
         {
-            if(color == ChessPieceColor.LIGHT)
+            if(color == Cell.Color.LIGHT)
             //[First player, light, white] heavies are on row 1
             {
                 return 8;
@@ -256,13 +256,13 @@ public class ChessBoard
             return false;
         }
 
-        public void move(Cell selection, Coordinates destination)
+        public void move(Cell activePiece, Coordinates destination)
         //Handles moving a piece after it has been verified. This is called in ChessGame under chooseLocation
         {
-            Coordinates selectionPos = selection.getPos();
+            Coordinates activePiecePos = activePiece.getPos();
 
-            setPiece(selection, destination);
-            setPiece(new Cell(selectionPos, this), selectionPos);
+            setPiece(activePiece, destination);
+            setPiece(new Cell(activePiecePos, this), activePiecePos);
         }
 
     //Other methods

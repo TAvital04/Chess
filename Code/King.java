@@ -14,11 +14,11 @@ public class King extends Cell
         private int age = 0;
 
     //Constructor
-        public King(Coordinates pos, ChessPieceColor color, ChessBoard board)
+        public King(Coordinates pos, Color color, ChessBoard board)
         {
             super(pos, board);
             super.setColor(color);
-            super.setType(ChessPieceType.KING);
+            super.setType(Type.KING);
         }
 
     //Methods
@@ -27,11 +27,11 @@ public class King extends Cell
         {
             try
             {
-                if(super.getColor() == ChessPieceColor.LIGHT)
+                if(super.getColor() == Color.LIGHT)
                 {
                     graphic.drawImage(ImageIO.read(LIGHT_IMAGE_FILE), super.getCol() * Cell.getCellSize(), super.getRow() * Cell.getCellSize(), null);
                 }
-                else if(super.getColor() == ChessPieceColor.DARK)
+                else if(super.getColor() == Color.DARK)
                 {
                     graphic.drawImage(ImageIO.read(DARK_IMAGE_FILE), super.getCol() * Cell.getCellSize(), super.getRow() * Cell.getCellSize(), null);
                 }
@@ -50,7 +50,7 @@ public class King extends Cell
 
             int col = super.getCol(), row = super.getRow();
 
-            ChessPieceColor color = super.getColor();
+            Color color = super.getColor();
 
             //Up
             if(canMoveAndEatThere(board, col, row - 1, color))
@@ -132,7 +132,7 @@ public class King extends Cell
             Cell rook = board.getPiece(0, 7);
 
             boolean kingIsValid = this.getAge() == 0;
-            boolean rookIsValid = rook.getType() == ChessPieceType.ROOK && rook.getAge() == 0;
+            boolean rookIsValid = rook.getType() == Type.ROOK && rook.getAge() == 0;
             boolean pathIsSafe = getPathIsSafe(board, 0, 4);
 
             if(kingIsValid && rookIsValid && pathIsSafe)
@@ -143,7 +143,7 @@ public class King extends Cell
             //Right
             rook = board.getPiece(7, 7);
 
-            rookIsValid = rook.getType() == ChessPieceType.ROOK && rook.getAge() == 0;
+            rookIsValid = rook.getType() == Type.ROOK && rook.getAge() == 0;
             pathIsSafe = getPathIsSafe(board, 4, 7);
 
             if(kingIsValid && rookIsValid && pathIsSafe)

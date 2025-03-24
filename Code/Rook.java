@@ -14,12 +14,12 @@ public class Rook extends Cell
         private int age = 0;
 
     //Constructor
-        public Rook(Coordinates pos, ChessPieceColor color, ChessBoard board)
+        public Rook(Coordinates pos, Color color, ChessBoard board)
         {
             super(pos, board);
 
             super.setColor(color);
-            super.setType(ChessPieceType.ROOK);
+            super.setType(Type.ROOK);
         }
 
     //Methods
@@ -28,11 +28,11 @@ public class Rook extends Cell
         {
             try
             {
-                if(super.getColor() == ChessPieceColor.LIGHT)
+                if(super.getColor() == Color.LIGHT)
                 {
                     graphic.drawImage(ImageIO.read(LIGHT_IMAGE_FILE), super.getCol() * Cell.getCellSize(), super.getRow() * Cell.getCellSize(), null);
                 }
-                else if(super.getColor() == ChessPieceColor.DARK)
+                else if(super.getColor() == Cell.Color.DARK)
                 {
                     graphic.drawImage(ImageIO.read(DARK_IMAGE_FILE), super.getCol() * Cell.getCellSize(), super.getRow() * Cell.getCellSize(), null);
                 }
@@ -51,7 +51,7 @@ public class Rook extends Cell
 
             int col, row;
 
-            ChessPieceColor color = super.getColor();
+            Color color = super.getColor();
 
             //Up
             col = super.getCol(); row = super.getRow() - 1;

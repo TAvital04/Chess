@@ -12,12 +12,12 @@ public class Knight extends Cell
         private static final File DARK_IMAGE_FILE = new File("Assets\\Dark_Kight.png");
     
     //Constructor
-        public Knight(Coordinates pos, ChessPieceColor color, ChessBoard board)
+        public Knight(Coordinates pos, Color color, ChessBoard board)
         {
             super(pos, board);
 
             super.setColor(color);
-            super.setType(ChessPieceType.KNIGHT);
+            super.setType(Type.KNIGHT);
         }
 
     //Methods
@@ -26,11 +26,11 @@ public class Knight extends Cell
         {
             try
             {
-                if(super.getColor() == ChessPieceColor.LIGHT)
+                if(super.getColor() == Color.LIGHT)
                 {
                     graphic.drawImage(ImageIO.read(LIGHT_IMAGE_FILE), super.getCol() * Cell.getCellSize(), super.getRow() * Cell.getCellSize(), null);
                 }
-                else if(super.getColor() == ChessPieceColor.DARK)
+                else if(super.getColor() == Color.DARK)
                 {
                     graphic.drawImage(ImageIO.read(DARK_IMAGE_FILE), super.getCol() * Cell.getCellSize(), super.getRow() * Cell.getCellSize(), null);
                 }
@@ -48,7 +48,7 @@ public class Knight extends Cell
             ArrayList<Coordinates> moves = new ArrayList<Coordinates>();
 
             int col = super.getCol(), row = super.getRow();
-            ChessPieceColor color = super.getColor();
+            Color color = super.getColor();
 
             //Up 2 right 1
             if(canMoveAndEatThere(board, col + 1, row - 2, color))

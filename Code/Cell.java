@@ -11,8 +11,8 @@ public class Cell
 
         private Coordinates pos;
 
-        private ChessPieceColor color;
-        private ChessPieceType type;
+        private Color color;
+        private Type type;
 
         private final String CELL_SELECTED_PATH = "Assets\\Cell_Selected.png";
         private final String CELL_VALIDSELECT_PATH = "Assets\\Cell_Valid.png";
@@ -35,10 +35,37 @@ public class Cell
         {
             this.pos = pos;
 
-            this.color = ChessPieceColor.NULL;
-            this.type = ChessPieceType.NULL;
+            this.color = Color.NULL;
+            this.type = Type.NULL;
 
             this.age = -1;
+        }
+
+    //Enums
+        public enum Color 
+        {
+            LIGHT, DARK, NULL;
+        
+            public static boolean isOpposite(Color one, Color two)
+            {
+                if(one == Color.LIGHT && two == Color.DARK)
+                {
+                    return true;
+                }
+                else if(one == Color.DARK && two == Color.LIGHT)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public enum Type 
+        {
+            NULL, PAWN, BISHOP, KNIGHT, ROOK, QUEEN, KING;
         }
 
     //Drawing methods
@@ -91,16 +118,16 @@ public class Cell
         }
 
     //Other methods
-        public boolean canMoveAndEatThere(ChessBoard board, int col, int row, ChessPieceColor color)
+        public boolean canMoveAndEatThere(ChessBoard board, int col, int row, Color color)
         //This tests if the piece can move and eat somewhere, works for most pieces
         {
             if(board.inBounds(col, row))
             {
-                if(ChessPieceColor.isOpposite(board.getPiece(col, row).getColor(), color))
+                if(Color.isOpposite(board.getPiece(col, row).getColor(), color))
                 {
                     return true;
                 }
-                else if(board.getPiece(col, row).getType() == ChessPieceType.NULL)
+                else if(board.getPiece(col, row).getType() == Type.NULL)
                 {
                     return true;
                 }
@@ -113,7 +140,7 @@ public class Cell
         {
             if(board.inBounds(col, row))
             {
-                if(board.getPiece(col, row).getType() == ChessPieceType.NULL)
+                if(board.getPiece(col, row).getType() == Type.NULL)
                 {
                     return true;
                 }
@@ -121,12 +148,12 @@ public class Cell
             
             return false;
         }
-        public boolean canEatThere(ChessBoard board, int col, int row, ChessPieceColor color)
+        public boolean canEatThere(ChessBoard board, int col, int row, Color color)
         //Applied for where a rook, row example, may stop to eat
         {
             if(board.inBounds(col, row))
             {
-                if(ChessPieceColor.isOpposite(board.getPiece(col, row).getColor(), color))
+                if(Color.isOpposite(board.getPiece(col, row).getColor(), color))
                 {
                     return true;
                 }
@@ -196,21 +223,21 @@ public class Cell
         }
 
         //Color
-        public ChessPieceColor getColor()
+        public Color getColor()
         {
             return color;
         }
-        public void setColor(ChessPieceColor color)
+        public void setColor(Color color)
         {
             this.color = color;
         }
 
         //Type
-        public ChessPieceType getType()
+        public Type getType()
         {
             return type;
         }
-        public void setType(ChessPieceType type)
+        public void setType(Type type)
         {
             this.type = type;
         }
