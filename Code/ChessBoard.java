@@ -262,14 +262,38 @@ public class ChessBoard
             Coordinates activePiecePos = activePiece.getPos();
 
             if(move.getType() == Move.Type.NORMAL || move.getType() == Move.Type.ENPASSANT)
+            //For a normal move, move the piece to the move location and empty the cell the piece was on
             {
                 setPiece(activePiece, move.getPos());
                 setPiece(new Cell(activePiecePos, this), activePiecePos);
             }
 
             if(move.getType() == Move.Type.ENPASSANT)
+            //If a move is an en passant, clear the cell under the new move location, as a pawn there just got eaten
             {
                 setPiece(new Cell(move.getPos().getX(), move.getPos().getY() + 1, this), move.getPos().getX(), move.getPos().getY() + 1);
+            }
+
+            if(move.getType() == Move.Type.CASTLE)
+            //If the move is a castle
+            {
+                if(activePiece instanceof King)
+                //If the piece is a king
+                {
+                    King king = (King)activePiece;
+
+                    if(move.getPos().getX() == 0)
+                    //If this is a left castle
+                    {
+                        king.leftCastle(this);
+                    }
+
+                    if(move.getPos().getX() == 7)
+                    //if this is a right castle
+                    {
+                        king.rightCastle(this);
+                    }
+                }
             }
         }
 
@@ -302,11 +326,11 @@ public class ChessBoard
                 if(attack.getPos().equals(move.getPos()))
                 //If the attack is at the same position of the move, the move is not safe
                 {
-                    return false;
+                    return true;
                 }
             }
 
-            return true;
+            return false;
         }
 
     //Other methods
@@ -318,30 +342,60 @@ public class ChessBoard
             {
                 for(Cell cell: row)
                 {
-                    if(cell instanceof Pawn)
+                    if(cell.getType() == Cell.Type.PAWN)
+                    //If the cell is a pawn
                     {
-                        Pawn pawn = (Pawn)cell;
-                        if(!pawn.isAtSpawn())
+                        if(cell.getRow() != Pawn.spawnPawnRowDown() && cell.getRow() != Pawn.spawnPawnRowUp())
+                        //and it's not in its original row
                         {
-                            pawn.setAge(pawn.getAge() + 1);
+                            //it has moved and can no longer en passant
+                            cell.setAge(cell.getAge() + 1);
                         }
                     }
 
-                    if(cell instanceof King)
+                    if(cell.getType() == Cell.Type.KING)
+                    //If the cell is a king
                     {
-                        King king = (King)cell;
-                        if(!king.isAtSpawn())
+                        if(cell.getColor() == Cell.Color.LIGHT)
+                        //if it's light
                         {
-                            king.setAge(king.getAge() + 1);
+                            if(!cell.getPos().equals(King.spawnLightKingUp()) && !cell.getPos().equals(King.spawnLightKingDown()))
+                            //and it's no longer in it's original position
+                            {
+                                //it has moved and can no longer castle
+                                cell.setAge(cell.getAge() + 1);
+                            }
+                        }
+                        if(cell.getColor() == Cell.Color.DARK)
+                        //if it's dark
+                        {
+                            if(!cell.getPos().equals(King.spawnDarkKingUp()) && !cell.getPos().equals(King.spawnDarkKingDown()))
+                            //and it's not in it's original position
+                            {
+                                //it has moved and can no longer castle
+                                cell.setAge(cell.getAge() + 1);
+                            }
                         }
                     }
 
-                    if(cell instanceof Rook)
+                    if(cell.getType() == Cell.Type.ROOK)
+                    //If the cell is a rook
                     {
-                        Rook rook = (Rook)cell;
-                        if(!rook.isAtSpawn())
+                        if(!cell.getPos().equals(Rook.spawnRookUpLeft()) && !cell.getPos().equals(Rook.spawnRookUpRight()))
+                        //if it's no longer in it's original position (up)
                         {
-                            rook.setAge(rook.getAge() + 1);
+                            if(!cell.getPos().equals(Rook.spawnRookDownLeft()) && !cell.getPos().equals(Rook.spawnRookDownRight()))
+                            //and it's no longer in it's original position (down)
+                            {
+                                //it has moved and can no longer help the king castle
+                                cell.setAge(cell.getAge() + 1);
+                                /*
+                                 * If you are observant, you can tell that there is a way for a rook not to age while still having moved,
+                                 * but for that to happen the king has to age, and castling won't happen anyway.
+                                 * 
+                                 * You can't say I wasn't thorough
+                                 */
+                            }
                         }
                     }
                 }

@@ -11,7 +11,7 @@ public class King extends Cell
         private final File LIGHT_IMAGE_FILE = new File("Assets\\Light_King.png");
         private final File DARK_IMAGE_FILE = new File("Assets\\Dark_King.png");
 
-        private int age = 0;
+        private int age;
 
     //Constructor
         public King(Coordinates pos, Color color, ChessBoard board)
@@ -19,6 +19,8 @@ public class King extends Cell
             super(pos, board);
             super.setColor(color);
             super.setType(Type.KING);
+
+            super.setAge(0);
         }
 
     //Methods
@@ -100,9 +102,8 @@ public class King extends Cell
                 moves.add(new Move(col - 1, row - 1, Move.Type.NORMAL));
             }
 
-            System.out.println(age + " " + moveType);
             //Castle
-            if(this.getAge() == 0 && moveType != Move.Type.CASTLE)
+            if(super.getAge() == 0 && moveType != Move.Type.CASTLE)
             //I'm about to check if a king that might prevent me from castling can castle, which it can't
                 //This would case a very annoying infinite loop and is basically the whole reason the Move class exists
             {
@@ -136,11 +137,24 @@ public class King extends Cell
             //Left
             Cell rook = board.getPiece(0, 7);
 
-            boolean kingIsValid = this.getAge() == 0;
+            boolean kingIsValid = super.getAge() == 0;
             boolean rookIsValid = rook.getType() == Type.ROOK && rook.getAge() == 0;
-            boolean pathIsSafe = getPathIsSafe(board, 0, 4);
 
-            if(kingIsValid && rookIsValid && pathIsSafe)
+            boolean pathIsClear = false, pathIsSafe = false;
+            if(super.getColor() == Color.LIGHT)
+            {
+                pathIsClear = getPathIsClear(board, 1, 3);
+                pathIsSafe = getPathIsSafe(board, 0, 4);
+            }
+            else if(super.getColor() == Color.DARK)
+            {
+                pathIsClear = getPathIsClear(board, 1, 2);
+                pathIsSafe = getPathIsSafe(board, 0, 3);
+            }
+
+            System.out.printf("(Left) kingIsValid = %b, rookIsValid = %b, pathIsClear = %b, pathIsSafe = %b\n", kingIsValid, rookIsValid, pathIsClear, pathIsSafe);
+
+            if(kingIsValid && rookIsValid && pathIsClear && pathIsSafe)
             {
                 moves.add(new Move(0, 7, Move.Type.CASTLE));
             }
@@ -149,26 +163,104 @@ public class King extends Cell
             rook = board.getPiece(7, 7);
 
             rookIsValid = rook.getType() == Type.ROOK && rook.getAge() == 0;
-            pathIsSafe = getPathIsSafe(board, 4, 7);
 
-
-            if(kingIsValid && rookIsValid && pathIsSafe)
+            if(super.getColor() == Color.LIGHT)
+            {
+                pathIsClear = getPathIsClear(board, 5, 6);
+                pathIsSafe = getPathIsSafe(board, 4, 7);
+            }
+            else if(super.getColor() == Color.DARK)
+            {
+                pathIsClear = getPathIsClear(board, 4, 6);
+                pathIsSafe = getPathIsSafe(board, 3, 7);
+            }
+            
+            if(kingIsValid && rookIsValid && pathIsClear && pathIsSafe)
             {
                 moves.add(new Move(7, 7, Move.Type.CASTLE));
             }
         }
-
-        public boolean getPathIsSafe(ChessBoard board, int start, int end)
+        public boolean getPathIsClear(ChessBoard board, int start, int end)
         {
             for(int i = start; i <= end; i++)
             {
-                if(!board.cellIsSafe(new Move(i, 0, Move.Type.CASTLE), super.getColor()))
+                if(!(board.getPiece(i, 7).getType() == Type.NULL))
                 {
                     return false;
                 }
             }
 
             return true;
+        }
+        public boolean getPathIsSafe(ChessBoard board, int start, int end)
+        {
+            for(int i = start; i <= end; i++)
+            {
+                if(!board.cellIsSafe(new Move(i, 7, Move.Type.CASTLE), super.getColor()))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public void leftCastle(ChessBoard board)
+        {
+            Cell rook = board.getPiece(Rook.spawnRookDownLeft());
+
+            Color color = super.getColor();
+
+            //Filter by color
+            if(color == Color.LIGHT)
+            {
+                //Move the king
+                board.setPiece(this, posLeftCastleLightKing());
+                board.setPiece(new Cell(spawnLightKingDown(), board), spawnLightKingDown());
+
+                //Move the rook
+                board.setPiece(rook, posLeftCastleLightRook());
+                board.setPiece(new Cell(Rook.spawnRookDownLeft(), board), Rook.spawnRookDownLeft());
+            }
+            if(color == Color.DARK)
+            {
+                //Move the king
+                board.setPiece(this, posLeftCastleDarkKing());
+                board.setPiece(new Cell(spawnDarkKingDown(), board), spawnDarkKingDown());
+
+                //Move the rook
+                board.setPiece(rook, posLeftCastleDarkRook());
+                board.setPiece(new Cell(Rook.spawnRookDownLeft(), board), Rook.spawnRookDownLeft());
+            }
+        }
+        public void rightCastle(ChessBoard board)
+        {
+            Cell rook = board.getPiece(Rook.spawnRookDownRight());
+
+            Color color = super.getColor();
+
+            //Filter by color
+            if(color == Color.LIGHT)
+            {
+                //Move the king
+                board.setPiece(this, posRightCastleLightKing());
+                board.setPiece(new Cell(spawnLightKingDown(), board), spawnLightKingDown());
+
+                //Move the rook
+                board.setPiece(rook, posRightCastleLightRook());
+                board.setPiece(new Cell(Rook.spawnRookDownRight(), board), Rook.spawnRookDownRight());
+            }
+            else if(color == Color.DARK)
+            {
+                //Move the king
+                board.setPiece(this, posRightCastleDarkKing());
+                board.setPiece(new Cell(spawnDarkKingDown(), board), spawnDarkKingDown());
+
+
+                //Move the rook
+                board.setPiece(rook, posRightCastleDarkRook());
+                board.setPiece(new Cell(Rook.spawnRookDownRight(), board), Rook.spawnRookDownRight());
+            }
         }
 
     //Getters/Setters
@@ -180,4 +272,35 @@ public class King extends Cell
         {
             this.age = n;
         }
+
+    //Retrieve positions
+        public static Coordinates spawnLightKingUp()
+        {
+            return new Coordinates(3, 0);
+        }
+        public static Coordinates spawnLightKingDown()
+        {
+            return new Coordinates(4, 7);
+        }
+        public static Coordinates spawnDarkKingUp()
+        {
+            return new Coordinates(4, 0);
+        }
+        public static Coordinates spawnDarkKingDown()
+        {
+            return new Coordinates(3, 7);
+        }
+
+        //Castle
+            //Light castle
+            public static Coordinates posLeftCastleLightKing(){return new Coordinates(2, 7);}
+            public static Coordinates posLeftCastleLightRook(){return new Coordinates(3, 7);}
+            public static Coordinates posRightCastleLightKing(){return new Coordinates(6, 7);}
+            public static Coordinates posRightCastleLightRook(){return new Coordinates(5, 7);}
+
+                //Dark castle
+            public static Coordinates posLeftCastleDarkKing(){return new Coordinates(1, 7);}
+            public static Coordinates posLeftCastleDarkRook(){return new Coordinates(2, 7);}
+            public static Coordinates posRightCastleDarkKing(){return new Coordinates(5, 7);}
+            public static Coordinates posRightCastleDarkRook(){return new Coordinates(4, 7);}
 }

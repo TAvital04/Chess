@@ -116,4 +116,15 @@ public class Pawn extends Cell
 
             return false;
         }
+
+    //Retrieve positions
+    public static int spawnPawnRowUp()
+    {
+        return 1;
+    }
+    
+    public static int spawnPawnRowDown()
+    {
+        return 6;
+    }
 }

@@ -125,4 +125,23 @@ public class Rook extends Cell
         {
             this.age = n;
         }
+
+    //Retrieve positions
+    public static Coordinates spawnRookUpLeft()
+    {
+        return new Coordinates(0, 0);
+    }
+    public static Coordinates spawnRookUpRight()
+    {
+        return new Coordinates(7, 0);
+    }
+    
+    public static Coordinates spawnRookDownLeft()
+    {
+        return new Coordinates(0, 7);
+    }
+    public static Coordinates spawnRookDownRight()
+    {
+        return new Coordinates(7, 7);
+    }
 }
