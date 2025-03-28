@@ -101,3 +101,8 @@ Day 15
         -checkmate
 
     -this may not help, but i'm going to work on a Coordinate class
+
+Da 19
+    -i lost a lot working with github. i don't want to talk about it
+    -all pieces move, castling and en passant works, now i'm checking for castling... again
+        -i've already figured out the logic, now i just need to implement it

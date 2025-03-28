@@ -103,12 +103,23 @@ public class King extends Cell
             }
 
             //Castle
-            if(super.getAge() == 0 && moveType != Move.Type.CASTLE)
+            if(super.getAge() == 0 && moveType != Move.Type.CASTLE && moveType != Move.Type.CHECK)
             //I'm about to check if a king that might prevent me from castling can castle, which it can't
                 //This would case a very annoying infinite loop and is basically the whole reason the Move class exists
             {
                 //Trying to castle
                 castling(board, moves);
+            }
+
+            //Check
+            if(moveType != Move.Type.CHECK)
+            //If we are not checking for checks for the other king
+            {
+                if(!board.cellIsSafe(new Move(super.getPos(), Move.Type.CHECK), color))
+                //if the king is in check
+                {
+                    super.filterMovesForCheck(board, moves);
+                }
             }
 
             return moves;
@@ -151,8 +162,6 @@ public class King extends Cell
                 pathIsClear = getPathIsClear(board, 1, 2);
                 pathIsSafe = getPathIsSafe(board, 0, 3);
             }
-
-            System.out.printf("(Left) kingIsValid = %b, rookIsValid = %b, pathIsClear = %b, pathIsSafe = %b\n", kingIsValid, rookIsValid, pathIsClear, pathIsSafe);
 
             if(kingIsValid && rookIsValid && pathIsClear && pathIsSafe)
             {

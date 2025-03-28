@@ -445,4 +445,24 @@ public class ChessBoard
         {
             return GRID_SIZE;
         }
+
+        public Cell getKing(Cell.Color color)
+        {
+            for(Cell[] row: chessBoard)
+            {
+                for(Cell cell: row)
+                //For every cell
+                {
+                    if(cell.getType() == Cell.Type.KING && cell.getColor() == color)
+                    //if the cell is the king of the same color
+                    {
+                        return cell;
+                    }
+                }
+            }
+
+            //Should not get here
+            System.out.println("Could not find king");
+            return null;
+        }
 }

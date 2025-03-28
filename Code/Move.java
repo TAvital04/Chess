@@ -19,7 +19,7 @@ public class Move
     //Enums
         public enum Type
         {
-            NORMAL, ENPASSANT, CASTLE;
+            NORMAL, ENPASSANT, CASTLE, CHECK;
         }
 
     //Getters/Setters

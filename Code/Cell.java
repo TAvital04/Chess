@@ -112,12 +112,45 @@ public class Cell
             this.validSelect = false;
         }
 
+    //Moves methods
         public ArrayList<Move> calculateValidMoves(ChessBoard board, Move.Type moveType)
         {
             return new ArrayList<Move>();
         }
+        public void filterMovesForCheck(ChessBoard board, ArrayList<Move> moves)
+        //Filters out all moves that keep the king in check
+        {
+            for(int i = 0; i < moves.size(); i++)
+            //For every move
+            {
+                if(stillInCheck(board, moves.get(i)))
+                {
+                    moves.remove(i);
+                    i--;
+                }
+            }
+        }
+        public boolean stillInCheck(ChessBoard board, Move move)
+        {
+            //Declare variables
+            Coordinates ogPos = this.getPos();
+            Cell occupant = board.getPiece(move.getPos());
+            boolean stillInCheck = true;
 
-    //Other methods
+            //Simulate the move
+            board.move(this, move);
+
+            //Check to see if the king is still in check
+            stillInCheck = !board.cellIsSafe(new Move(board.getKing(this.getColor()).getPos(), Move.Type.CHECK), color);
+
+            //Undo the move
+            board.move(this, new Move(ogPos, Move.Type.NORMAL));
+            board.setPiece(occupant, move.getPos());
+
+            //Return the result
+            return stillInCheck;
+        }
+
         public boolean canMoveAndEatThere(ChessBoard board, int col, int row, Color color)
         //This tests if the piece can move and eat somewhere, works for most pieces
         {

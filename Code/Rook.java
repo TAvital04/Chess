@@ -101,6 +101,17 @@ public class Rook extends Cell
                 moves.add(new Move(col, row, Move.Type.NORMAL));
             }
 
+            //Check
+            if(moveType != Move.Type.CHECK)
+            //If we are not checking for checks for the other king
+            {
+                if(!board.cellIsSafe(new Move(board.getKing(super.getColor()).getPos(), Move.Type.CHECK), color))
+                //if the king is in check
+                {
+                    super.filterMovesForCheck(board, moves);
+                }
+            }
+
             return moves;
         }
 
